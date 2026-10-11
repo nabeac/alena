@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block main %}
+<div class="container mt-3">
+  <h2>Profile</h2>
+  <div class="card">
+    <div class="card-body">
+        <ul>
+            <li>name : {{ object.get_full_name }}</li>
+            <li>username : {{ object.username }}</li>
+            <li>email : {{ object.email }}</li>
+        </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}

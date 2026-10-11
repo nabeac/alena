@@ -1,0 +1,9 @@
+<nav class="navbar d-flex flex-row bg-white shadow-sm mb-4">
+  {% if request.user.is_authenticated %}
+  <div class=""><a href="{% url 'account:logout' %}" class="navbar-brand ">logout</a></div>
+  <div class=""><a href="{% url 'account:profile' %}" class="navbar-brand ">profile</a></div>
+  {% else %}
+  <div class=""><a href="{% url 'account:login' %}" class="navbar-brand ">Login</a></div>
+  <div class=""><a href="{% url 'account:register' %}" class="navbar-brand ">register</a></div>
+  {% endif %}
+</nav>
