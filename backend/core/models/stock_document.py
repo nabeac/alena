@@ -15,7 +15,7 @@ class DocumentItem(models.Model):
 
 class InOutDocument(models.Model):
     document_type = models.CharField(max_length=60)
-    description = models.TextField
+    description = models.TextField()
     status = models.CharField(max_length=1, choices=TRANSACTION_STATUS, default='d')
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
@@ -33,7 +33,7 @@ class InOutDocument(models.Model):
     
 class TransferDocument(models.Model):
     document_type = models.CharField(max_length=60)
-    description = models.TextField
+    description = models.TextField()
     status = models.CharField(max_length=1, choices=TRANSACTION_STATUS, default='d')
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)

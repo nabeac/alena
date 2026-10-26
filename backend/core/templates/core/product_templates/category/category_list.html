@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Users Page Content -->
+<div class="page-content">
+  <!-- Page Header -->
+  <div class="page-header">
+    <h1 class="page-title">
+      <i class="bi bi-tags text-primary"></i>
+      مدیریت دسته‌بندی‌ها
+    </h1>
+    <a href="{% url 'core:category_create' %}" class="btn btn-primary" id="addUserBtn">
+      <i class="bi bi-tags"></i>
+      افزودن دسته بندی
+    </a>
+  </div>
+  <!-- Category Table -->
+  <div class="section-card p-0 overflow-hidden">
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0" id="usersTable">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">عنوان</th>
+            <th scope="col">توضیحات</th>
+            <th scope="col">دسته بندی اصلی</th>
+            <th scope="col">فعال</th>
+            <th scope="col">عملیات</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for category in categories %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>
+              <div class="d-flex align-items-center">
+                <span class="fw-bold">{{ category.title }}</span>
+              </div>
+            </td>
+            <td>{{ category.description|truncatewords:8 }}</td>
+            <td>{{ category.sub_cat.title }}</td>
+            {% if category.is_active %}
+            <td class="text-success">✔</span>
+            {% else %}
+            <td class="text-danger">✘</span>
+            {% endif %}
+            <td>
+              <div class="d-flex gap-1">
+                <a href="{% url 'core:category_update' category.id %}"
+                  class="btn btn-sm btn-outline-secondary edit-user" aria-label="ویرایش دسته بندی" data-user-id="1">
+                  <i class="bi bi-pencil"></i>
+                </a>
+                <form action="{% url 'core:category_delete' category.id %}" method="post" onsubmit="return confirm('Are you sure?');">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-sm btn-outline-danger delete-user">
+                    <i class="bi bi-trash"></i>
+                  </button>                
+                </form>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

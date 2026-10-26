@@ -5,9 +5,9 @@ from .constants import PRODUCT_STATUS
 # Create your product's models here.
 
 class Unit(models.Model):
-    name = models.CharField(max_length=60)
+    name = models.CharField(max_length=60, unique=True)
     symbol = models.CharField(max_length=20)
-    description = models.TextField
+    description = models.TextField(null=True, blank=True)
     is_active = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
 
@@ -15,19 +15,22 @@ class Unit(models.Model):
         return self.name
 
 class Category(models.Model):
-    title = models.CharField(max_length=60)
-    description = models.TextField
+    title = models.CharField(max_length=60, unique=True, error_messages={'unique': "A category with this title already exists."})
+    description = models.TextField(null=True, blank=True)
     is_active = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
-    sub_cat = models.ForeignKey("self", on_delete=models.PROTECT, null=True, blank=True)
+    sub_cat = models.ForeignKey("self", related_name="children", on_delete=models.PROTECT, null=True, blank=True)
+
+    class Meta:
+        verbose_name_plural  = "Categories"
 
     def __str__(self):
         return self.title
 
 class Product(models.Model):
-    code = models.CharField()
+    code = models.CharField(unique=True)
     name = models.CharField(max_length=60)
-    description = models.TextField
+    description = models.TextField()
     barcode = models.CharField(null=True, blank=True)
     min_stock = models.PositiveIntegerField()
     updated = models.DateTimeField(auto_now=True)
