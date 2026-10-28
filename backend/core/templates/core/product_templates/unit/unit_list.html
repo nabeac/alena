@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Users Page Content -->
+<div class="page-content">
+  <!-- Page Header -->
+  <div class="page-header">
+    <h1 class="page-title">
+      <i class="bi bi-tags text-primary"></i>
+      مدیریت واحد اندازه گیری
+    </h1>
+    <a href="{% url 'core:unit_create' %}" class="btn btn-primary" id="addUserBtn">
+      <i class="bi bi-tags"></i>
+      افزودن واحد اندازه گیری
+    </a>
+  </div>
+  <!-- Unit Table -->
+  <div class="section-card p-0 overflow-hidden">
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0" id="usersTable">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">نماد</th>
+            <th scope="col">عنوان</th>
+            <th scope="col">توضیحات</th>
+            <th scope="col">فعال</th>
+            <th scope="col">عملیات</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for unit in units %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ unit.symbol }}</td>
+            <td>
+              <div class="d-flex align-items-center">
+                <span class="fw-bold">{{ unit.name }}</span>
+              </div>
+            </td>
+            <td>{{ unit.description|truncatewords:8 }}</td>
+            {% if unit.is_active %}
+            <td class="text-success">✔</span>
+            {% else %}
+            <td class="text-danger">✘</span>
+            {% endif %}
+            <td>
+              <div class="d-flex gap-1">
+                <a href="{% url 'core:unit_update' unit.id %}"
+                  class="btn btn-sm btn-outline-secondary edit-user" aria-label="ویرایش دسته بندی" data-user-id="1">
+                  <i class="bi bi-pencil"></i>
+                </a>
+                <form action="{% url 'core:unit_delete' unit.id %}" method="post" id="deleteForm" >
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-sm btn-outline-danger delete-user" onclick="return confirm('Are you sure?');">
+                    <i class="bi bi-trash"></i>
+                  </button>                
+                </form>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+document.getElementById('deleteModal').addEventListener('show.bs.modal', function (event) {
+    const btn = event.relatedTarget;
+    document.getElementById('deleteForm').action = btn.dataset.action;
+    document.getElementById('deleteName').textContent = btn.dataset.name;
+});
+</script>
+{% endblock %}
