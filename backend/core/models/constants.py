@@ -9,8 +9,3 @@ SECTION_STATUS = (
     ('low', 'موجودی کم'), # low_stock
     ('out', 'ناموجود') # out_of_stock
 )
-
-PRODUCT_STATUS = (
-    ("a", "فعال"), # active
-    ("d", "غیرفعال") # deactive
-)

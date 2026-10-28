@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<!-- Users Page Content -->
+<div class="page-content">
+  <!-- Page Header -->
+  <div class="page-header">
+    <h1 class="page-title">
+      <i class="bi bi-tags text-primary"></i>
+      مدیریت محصولات
+    </h1>
+    <a href="{% url 'core:product_create' %}" class="btn btn-primary" id="addUserBtn">
+      <i class="bi bi-tags"></i>
+      افزودن محصولات
+    </a>
+  </div>
+  <!-- Product Table -->
+  <div class="section-card p-0 overflow-hidden">
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0" id="usersTable">
+        <thead>
+          <tr class="text-center">
+            <th scope="col">#</th>
+            <th scope="col">عکس</th>
+            <th scope="col">کد</th>
+            <th scope="col">اسم</th>
+            <th scope="col">دسته بندی</th>
+            <th scope="col">واحد اندازه گیری</th>
+            <th scope="col">توضیحات</th>
+            <th scope="col">حداقل موجودی</th>
+            <th scope="col">بارکد</th>
+            <th scope="col">وضعیت</th>
+            <th scope="col">عملیات</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for product in products %}
+          <tr class="text-center">
+            <td>{{ forloop.counter }}</td>
+            <td>
+              {% if product.thumbnail %}
+              <img src="{{ product.thumbnail.url }}" style="width: 10vw; height: 10vh;" alt="">
+              {% endif %}
+            </td>
+            <td>{{ product.code }}</td>
+            <td class="fw-bold">{{ product.name }}</td>
+            <td>{{ product.category }}</td>
+            <td>{{ product.unit }}</td>
+            <td>{{ product.description|truncatewords:8 }}</td>
+            <td>{{ product.min_stock }}</td>
+            <td>{{ product.barcode }}</td>
+            {% if product.is_active %}
+            <td class="text-success">✔</span>
+            {% else %}
+            <td class="text-danger">✘</span>
+            {% endif %}            
+            <td>
+              <div class="d-flex gap-1">
+                <a href="{% url 'core:product_update' product.id %}" class="btn btn-sm btn-outline-secondary edit-user"
+                  data-user-id="1">
+                  <i class="bi bi-pencil"></i>
+                </a>
+                <form action="{% url 'core:product_delete' product.id %}" method="post" id="deleteForm">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-sm btn-outline-danger delete-user"
+                    onclick="return confirm('Are you sure?');">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                </form>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -6,11 +6,14 @@
     <a href="{% url 'core:home' %}" class="nav-link">
       <i class="bi bi-grid-1x2-fill"></i> داشبورد
     </a>
-    <a href="#" class="nav-link active">
+    <a href="{% url 'core:product_list' %}" class="nav-link active">
       <i class="bi bi-box"></i> محصولات
     </a>
     <a href="{% url 'core:category_list' %}" class="nav-link">
       <i class="bi bi-tags"></i> دسته‌بندی‌ها
+    </a>
+    <a href="{% url 'core:unit_list' %}" class="nav-link">
+      <i class="bi bi-tags"></i> واحد اندازه گیری ها
     </a>
     <a href="#" class="nav-link">
       <i class="bi bi-building"></i> انبارها
