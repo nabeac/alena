@@ -34,5 +34,5 @@ class UserRegisterForm(forms.Form):
 
 
 class UserLoginForm(forms.Form):
-    username = forms.CharField(widget=forms.TelInput(attrs={'class':'py-3 px-2 w-full rounded-2xl mt-4 mx-10'}))
+    username = forms.CharField(widget=forms.TelInput(attrs={'class':'py-3 px-2 w-full rounded-2xl mt-4 mx-10'}), label="username/email")
     password = forms.CharField(widget=forms.PasswordInput(attrs={'class':'py-3 px-2 w-full rounded-2xl mx-10 mt-4'}))
